@@ -20,15 +20,27 @@ const Home = () => {
                       <p className="text-6xl font-bold mb-4">{`${
                         data.temp
                       }${"\u2103"}`}</p>
-                      <div className='flex justify-between'>
-                        <span>Max: {`${data.max_temp}${"\u2103"}`}</span>
-                        <span>Min: {`${data.min_temp}${"\u2103"}`}</span>
+                      <div>
+                        <p>
+                          {data.weather === "Clouds"
+                            ? "Cloudy"
+                            : data.weather === "sunny"
+                            ? "Sunny"
+                            : ""}{" "}
+                        </p>
+                        <p className="font-semibold">
+                          {data.weather === "Clouds"
+                            ? "Excellent weather for a walk"
+                            : data.weather === "sunny"
+                            ? "Its hot outside!!!"
+                            : ""}
+                        </p>
                       </div>
-                      <p>{data.weather}</p>
+
                       <p>{data.sunrise}</p>
                       <p>{data.sunset}</p>
                     </div>
-                    <div className="absolute -right-48 top-24">
+                    <div className="absolute -right-48 top-24 overflow-hidden">
                       <Sun />
                     </div>
                   </div>

@@ -76,9 +76,7 @@ export function AuthProvider({ children }) {
             lat: res.coord.lat,
             sunrise: TimeCalc(res.sys.sunrise),
             sunset: TimeCalc(res.sys.sunset),
-            temp: res.main.temp,
-            min_temp: res.main.temp_min,
-            max_temp: res.main.temp_max,
+            temp: res1.current.temp,
             date: DateCalc(),
             weekWeather: [
               {
@@ -129,7 +127,7 @@ export function AuthProvider({ children }) {
           },
         ];
         setLocationData(data);
-        console.log(res);
+        console.log(res1);
       } catch (error) {
         console.log(error);
       }
