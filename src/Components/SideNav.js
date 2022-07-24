@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import MenuOpen from "./Icons/MenuOpen";
 import MenuClose from "./Icons/MenuClose";
+import { useAuth } from "../Context/ForecastContext";
 
 const SideNav = () => {
   const [width, setWidth] = useState(window.innerWidth);
   const [menu, setMenu] = useState(false);
+  const { locationData } = useAuth();
 
   const handleResize = () => {
     setWidth(window.innerWidth);
@@ -18,7 +20,7 @@ const SideNav = () => {
   }, [width]);
   return (
     <header className="md:flex md:justify-between items-center  bg-inherit w-full">
-      <div className="md:w-4/12 flex justify-between items-center">
+      <div className="md:w-2/12 flex justify-between items-center">
         <span
           className="md:hidden"
           onClick={() => {
@@ -27,6 +29,13 @@ const SideNav = () => {
         >
           {!menu ? <MenuOpen /> : <MenuClose />}
         </span>
+        <div className='md:w-6/12 text-center block md:hidden text-xl font-bold text-white'>
+        <ul>
+          {locationData.map((data) => {
+            return <p key={data.date}>{data.date}</p>;
+          })}
+        </ul>
+      </div>
         <div className="text-xl font-bold font-serif text-hdr outline-8 flex  justify-between">
           <img
             src="https://cdn-icons-png.flaticon.com/512/1779/1779940.png"
@@ -34,6 +43,13 @@ const SideNav = () => {
             alt="logo"
           />
         </div>
+      </div>
+      <div className='w-6/12 text-center md:block hidden text-xl font-bold text-white'>
+        <ul>
+          {locationData.map((data) => {
+            return <p key={data.date}>{data.date}</p>;
+          })}
+        </ul>
       </div>
 
       <div className="w-2/12">
@@ -54,19 +70,19 @@ const SideNav = () => {
               Home
             </NavLink>
           </li>
-          
-            <li className="md:my-0 my-5">
-              <NavLink
-                onClick={() => {
-                  setMenu(false);
-                }}
-                end
-                to="/profile"
-                className="text-xl"
-              >
-                Search
-              </NavLink>
-            </li>
+
+          <li className="md:my-0 my-5">
+            <NavLink
+              onClick={() => {
+                setMenu(false);
+              }}
+              end
+              to="/profile"
+              className="text-xl"
+            >
+              Search
+            </NavLink>
+          </li>
         </ul>
       </div>
     </header>
