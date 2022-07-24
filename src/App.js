@@ -1,27 +1,14 @@
-import { useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
+import Home from "./Pages/Home";
+import SideNav from "./Components/SideNav";
 
 export default function App() {
-  useEffect(() => {
-    const locate = async () => {
-      try {
-        const fetchLocation = await fetch(
-          "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyD_rbHJo6ug-X95KgkJZtPHI_5mlC9AgH0"
-        );
-        const response = await fetchLocation.json();
-        console.log(response);
-      } catch (error) {
-        alert(error.message);
-        console.log(error)
-      }
-    };
-
-    locate();
-  }, []);
-
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <p></p>
-    </>
+    <div className='bg-gradient-to-bl from-sunrise to-sunset pt-8 md:px-6 px-2 min-h-screen'>
+      <SideNav />
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+      </Routes>
+    </div>
   );
 }
