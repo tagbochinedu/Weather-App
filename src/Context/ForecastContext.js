@@ -11,7 +11,7 @@ export function AuthProvider({ children }) {
   const [locationWeather, setLocationWeather] = useState([])
   const [weeklyWeather, setWeeklyWeather] = useState([]);
   useEffect(() => {
-    const API_KEY = REACT_APP_API_KEY;
+    const API_KEY = process.env.REACT_APP_API_KEY;
     navigator.geolocation.getCurrentPosition((position) => {
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
