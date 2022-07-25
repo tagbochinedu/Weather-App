@@ -19,7 +19,7 @@ const SideNav = () => {
     }
   }, [width]);
   return (
-    <header className="md:flex md:justify-between items-center  bg-inherit w-full">
+    <header className="md:flex md:justify-between items-center  bg-inherit w-full md:px-6 px-2">
       <div className="md:w-2/12 flex justify-between items-center">
         <span
           className="md:hidden"

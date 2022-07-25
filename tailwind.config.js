@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        sunrise: "#EFD594",
-        sunset: "#EB7A13",
+        sunrise: "#ECB325",
+        sunset: "#ED7301",
       },
     },
   },
