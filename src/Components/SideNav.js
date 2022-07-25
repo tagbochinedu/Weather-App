@@ -7,7 +7,7 @@ import { useAuth } from "../Context/ForecastContext";
 const SideNav = () => {
   const [width, setWidth] = useState(window.innerWidth);
   const [menu, setMenu] = useState(false);
-  const { locationData } = useAuth();
+  const { locationWeather } = useAuth();
 
   const handleResize = () => {
     setWidth(window.innerWidth);
@@ -31,7 +31,7 @@ const SideNav = () => {
         </span>
         <div className='md:w-6/12 text-center block md:hidden text-xl font-bold text-white'>
         <ul>
-          {locationData.map((data) => {
+          {locationWeather.map((data) => {
             return <p key={data.date}>{data.date}</p>;
           })}
         </ul>
@@ -46,7 +46,7 @@ const SideNav = () => {
       </div>
       <div className='w-6/12 text-center md:block hidden text-xl font-bold text-white'>
         <ul>
-          {locationData.map((data) => {
+          {locationWeather.map((data) => {
             return <p key={data.date}>{data.date}</p>;
           })}
         </ul>

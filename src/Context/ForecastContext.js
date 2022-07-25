@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState} from "react";
+import REACT_APP_API_KEY from "../apikey";
 
 const ForecastContext = React.createContext();
 
@@ -9,9 +10,10 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-  const [locationData, setLocationData] = useState([]);
+  const [locationWeather, setLocationWeather] = useState([])
+  const [weeklyWeather, setWeeklyWeather] = useState([]);
   useEffect(() => {
-    const API_KEY = process.env.REACT_APP_API_KEY;
+    const API_KEY = REACT_APP_API_KEY;
     navigator.geolocation.getCurrentPosition((position) => {
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
@@ -42,7 +44,7 @@ export function AuthProvider({ children }) {
           "Nov",
           "Dec",
         ];
-        const days = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
+        const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat" ];
         const DateCalc = (timing) => {
           let time = "";
           if (timing) {
@@ -78,55 +80,56 @@ export function AuthProvider({ children }) {
             sunset: TimeCalc(res.sys.sunset),
             temp: res1.current.temp,
             date: DateCalc(),
-            weekWeather: [
-              {
-                date: DateCalc(res1.daily[0].dt),
-                day_temp: res1.daily[0].temp.day,
-                night_temp: res1.daily[0].temp.night,
-                weather: res1.daily[0].weather[0].main,
-              },
-              {
-                date: DateCalc(res1.daily[1].dt),
-                day_temp: res1.daily[1].temp.day,
-                night_temp: res1.daily[1].temp.night,
-                weather: res1.daily[1].weather[0].main,
-              },
-              {
-                date: DateCalc(res1.daily[2].dt),
-                day_temp: res1.daily[2].temp.day,
-                night_temp: res1.daily[2].temp.night,
-                weather: res1.daily[2].weather[0].main,
-              },
-              {
-                date: DateCalc(res1.daily[3].dt),
-                day_temp: res1.daily[3].temp.day,
-                night_temp: res1.daily[3].temp.night,
-                weather: res1.daily[3].weather[0].main,
-              },
-              {
-                date: DateCalc(res1.daily[4].dt),
-                day_temp: res1.daily[4].temp.day,
-                night_temp: res1.daily[4].temp.night,
-                weather: res1.daily[4].weather[0].main,
-              },
-              {
-                date: DateCalc(res1.daily[5].dt),
-                day_temp: res1.daily[5].temp.day,
-                night_temp: res1.daily[5].temp.night,
-                weather: res1.daily[5].weather[0].main,
-              },
-              {
-                date: DateCalc(res1.daily[6].dt),
-                day_temp: res1.daily[6].temp.day,
-                night_temp: res1.daily[6].temp.night,
-                weather: res1.daily[6].weather[0].main,
-              },
-            ],
             weather: res.weather[0].main,
             weatherDesc: res.weather[0].description,
           },
         ];
-        setLocationData(data);
+        const weeklyData = [
+          {
+            date: DateCalc(res1.daily[0].dt),
+            day_temp: res1.daily[0].temp.day,
+            night_temp: res1.daily[0].temp.night,
+            weather: res1.daily[0].weather[0].main,
+          },
+          {
+            date: DateCalc(res1.daily[1].dt),
+            day_temp: res1.daily[1].temp.day,
+            night_temp: res1.daily[1].temp.night,
+            weather: res1.daily[1].weather[0].main,
+          },
+          {
+            date: DateCalc(res1.daily[2].dt),
+            day_temp: res1.daily[2].temp.day,
+            night_temp: res1.daily[2].temp.night,
+            weather: res1.daily[2].weather[0].main,
+          },
+          {
+            date: DateCalc(res1.daily[3].dt),
+            day_temp: res1.daily[3].temp.day,
+            night_temp: res1.daily[3].temp.night,
+            weather: res1.daily[3].weather[0].main,
+          },
+          {
+            date: DateCalc(res1.daily[4].dt),
+            day_temp: res1.daily[4].temp.day,
+            night_temp: res1.daily[4].temp.night,
+            weather: res1.daily[4].weather[0].main,
+          },
+          {
+            date: DateCalc(res1.daily[5].dt),
+            day_temp: res1.daily[5].temp.day,
+            night_temp: res1.daily[5].temp.night,
+            weather: res1.daily[5].weather[0].main,
+          },
+          {
+            date: DateCalc(res1.daily[6].dt),
+            day_temp: res1.daily[6].temp.day,
+            night_temp: res1.daily[6].temp.night,
+            weather: res1.daily[6].weather[0].main,
+          },
+        ];
+        setWeeklyWeather(weeklyData)
+        setLocationWeather(data);
         console.log(res1);
       } catch (error) {
         console.log(error);
@@ -136,7 +139,7 @@ export function AuthProvider({ children }) {
   }, [latitude, longitude]);
 
 
-  const value = {locationData};
+  const value = {locationWeather, weeklyWeather};
   return (
     <ForecastContext.Provider value={value}>
       {children}
