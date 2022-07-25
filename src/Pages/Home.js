@@ -1,4 +1,5 @@
 import Sun from "../Components/Icons/Sun";
+import Cloud from "../Components/Icons/Cloud";
 import { useAuth } from "../Context/ForecastContext";
 
 const Home = () => {
@@ -28,6 +29,8 @@ const Home = () => {
                               ? " Cloudy"
                               : data.weather === "sunny"
                               ? "Sunny"
+                              : data.weather === "Rain"
+                              ? "Raining"
                               : ""}{" "}
                           </span>{" "}
                           outside!!
@@ -37,6 +40,8 @@ const Home = () => {
                             ? "Excellent weather for a walk"
                             : data.weather === "sunny"
                             ? "Its hot outside!!!"
+                            : data.weather === "Rain"
+                            ? "A rainy day, I see"
                             : ""}
                         </p>
                       </div>
@@ -45,7 +50,7 @@ const Home = () => {
                       <p>Sunset: {data.sunset}</p>
                     </div>
                     <div className="md:static absolute -right-48 top-24 overflow-hidden md:w-4/12">
-                      <Sun />
+                      <Sun className={"h:96 w-96 md:h-96 md:w-96 text-white"} />
                     </div>
                   </div>
                 </div>
@@ -54,11 +59,26 @@ const Home = () => {
           </ul>
         </div>
         <div className="border-y border-y-white md:my-auto mt-24">
-          <ul className="flex justify-between overflow-x-auto">
+          <ul className="overflow-x-auto whitespace-nowrap ... scrollbar-hide">
             {weeklyWeather.map((week) => {
               return (
-                <div className='w-5/12' key={week.date}>
+                <div className="w-96 inline-block" key={week.date}>
                   <p>{week.date}</p>
+                  <p>
+                    A{" "}
+                    {week.weather === "Clouds" ? (
+                      <Cloud className={'h-6 w-6 text-white'}/>
+                    ) : week.weather === "sunny" ? (
+                      <Sun className={'h-4 w-4 text-white'}/>
+                    ) : week.weather === "Rain" ? (
+                      'rainy'
+                    ) : (
+                      ""
+                    )}{" "}
+                    day
+                  </p>
+                  <p>Day {`${week.day_temp}${"\u2103"}`}</p>
+                  <p>Night {`${week.night_temp}${"\u2103"}`}</p>
                 </div>
               );
             })}

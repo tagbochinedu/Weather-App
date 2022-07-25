@@ -76,7 +76,7 @@ export function AuthProvider({ children }) {
             lat: res.coord.lat,
             sunrise: TimeCalc(res.sys.sunrise),
             sunset: TimeCalc(res.sys.sunset),
-            temp: res1.current.temp,
+            temp: res.main.temp,
             date: DateCalc(),
             weather: res.weather[0].main,
             weatherDesc: res.weather[0].description,
@@ -128,6 +128,7 @@ export function AuthProvider({ children }) {
         ];
         setWeeklyWeather(weeklyData)
         setLocationWeather(data);
+        console.log(res)
         console.log(res1);
       } catch (error) {
         console.log(error);

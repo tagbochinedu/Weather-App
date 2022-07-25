@@ -4,10 +4,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'sunrise': "#EFD594",
-        'sunset': "#EB7A13",
+        sunrise: "#EFD594",
+        sunset: "#EB7A13",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };
