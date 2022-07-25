@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState} from "react";
-import REACT_APP_API_KEY from "../apikey";
-
 const ForecastContext = React.createContext();
 
 export function useAuth() {
