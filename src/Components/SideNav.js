@@ -77,7 +77,7 @@ const SideNav = () => {
                 setMenu(false);
               }}
               end
-              to="/profile"
+              to="/search"
               className="text-xl"
             >
               Search

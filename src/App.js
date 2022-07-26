@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
+import Search from "./Pages/Search";
 import { SunIcon } from "@heroicons/react/solid";
 import SideNav from "./Components/SideNav";
 import { useAuth } from "./Context/ForecastContext";
@@ -17,6 +18,7 @@ export default function App() {
           <SideNav />
           <Routes>
             <Route exact path="/" element={<Home />} />
+            <Route exact path='/search' element={<Search/>}/>
           </Routes>
         </>
       )}
