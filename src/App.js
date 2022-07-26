@@ -8,12 +8,10 @@ export default function App() {
   const { loading } = useAuth();
   return (
     <div
-      className={"bg-gradient-to-bl from-sunrise to-sunset pt-8 min-h-screen"}
+      className={`${"bg-gradient-to-bl from-sunrise to-sunset pt-6 min-h-screen"} ${loading? 'flex justify-center items-center': ''}`}
     >
       {loading ? (
-        <div className="min-h-screen flex justify-center items-center">
           <Sun className="animate-spin text-white w-16 h-16" />
-        </div>
       ) : (
         <>
           <SideNav />

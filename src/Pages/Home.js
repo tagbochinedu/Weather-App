@@ -1,9 +1,9 @@
 import Sun from "../Components/Icons/Sun";
 import Cloud from "../Components/Icons/Cloud";
+import Arrow from "../Components/Icons/Arrow";
 import { useAuth } from "../Context/ForecastContext";
 
 const Home = () => {
-
   const { locationWeather, weeklyWeather } = useAuth();
   return (
     <>
@@ -65,34 +65,55 @@ const Home = () => {
             })}
           </ul>
         </div>
-        <div className="border-y border-y-white md:my-auto mt-24 px-2">
-          <div className="md:hidden flex justify-between items-center text-center">
-            <p className="w-2/12">Date</p>
-            <p className="w-2/12">Weather ForeCast</p>
-            <p className="w-2/12">Day Temp</p>
-            <p className="w-2/12">Night Temp</p>
+        <div className="border-t border-t-white md:my-auto md:flex mt-24 px-2 py-2">
+          <div className="flex md:block md:w-2/12 justify-between items-center text-center md:text-left md:text-lg font-semibold">
+            <p className="w-2/12 md:w-full mx-auto">Date</p>
+            <span className="absolute right-5 bg-sunset hidden md:block rounded-3xl">
+              <Arrow className="h-12 w-12 opacity-80" />
+            </span>{" "}
+            <p className="w-2/12 md:w-full mx-auto">Weather Forecast</p>
+            <p className="w-2/12 md:w-full mx-auto">Day Temp</p>
+            <p className="w-2/12 md:w-full mx-auto">Night Temp</p>
           </div>
-          <ul className="overflow-x-auto whitespace-nowrap ... scrollbar-hide">
+          <ul className="overflow-x-auto whitespace-nowrap ... scrollbar-hide md:w-10/12">
             {weeklyWeather.map((week) => {
               return (
                 <div
-                  className="md:w-1/4 text-center flex justify-between md:inline-block my-4"
+                  className="md:w-1/4 text-center flex justify-between md:inline-block md:border-l-2 md:border-white"
                   key={week.date}
                 >
-                  <p className="w-2/12">{week.date}</p>
-                  <p className="w-2/12">
+                  <p className="w-2/12 md:w-full mx-auto text-lg font-semibold">
+                    {week.date}
+                  </p>
+                  <p className="w-2/12 md:w-full mx-auto">
                     {week.weather === "Clouds" ? (
-                      <Cloud className={"h-6 w-6 text-white"} />
+                      <Cloud
+                        className={
+                          "w-2/12 md:w-full h-8 w-8 text-white mx-auto"
+                        }
+                      />
                     ) : week.weather === "sunny" ? (
-                      <Sun className={"h-4 w-4 text-white"} />
+                      <Sun
+                        className={
+                          "w-2/12 md:w-full h-8 w-8 text-white mx-auto"
+                        }
+                      />
                     ) : week.weather === "Rain" ? (
-                      <Sun className={"h-4 w-4 text-white mx-auto"} />
+                      <Sun
+                        className={
+                          "w-2/12 md:w-full text-white mx-auto h-8 w-8"
+                        }
+                      />
                     ) : (
                       ""
                     )}
                   </p>
-                  <p className="w-2/12">{`${week.day_temp}${"\u2103"}`}</p>
-                  <p className="w-2/12">{`${week.night_temp}${"\u2103"}`}</p>
+                  <p className="w-2/12 md:w-full mx-auto text-lg font-semibold">{`${
+                    week.day_temp
+                  }${"\u2103"}`}</p>
+                  <p className="w-2/12 md:w-full mx-auto text-lg font-semibold">{`${
+                    week.night_temp
+                  }${"\u2103"}`}</p>
                 </div>
               );
             })}
