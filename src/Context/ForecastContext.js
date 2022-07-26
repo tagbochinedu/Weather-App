@@ -10,6 +10,8 @@ export function AuthProvider({ children }) {
   const [longitude, setLongitude] = useState("");
   const [locationWeather, setLocationWeather] = useState([])
   const [weeklyWeather, setWeeklyWeather] = useState([]);
+  const [loading, setLoading] = useState(true)
+ 
   useEffect(() => {
     const API_KEY = process.env.REACT_APP_API_KEY;
     navigator.geolocation.getCurrentPosition((position) => {
@@ -27,7 +29,7 @@ export function AuthProvider({ children }) {
         );
         const res = await response.json();
         const res1 = await response1.json();
-
+          
         const months = [
           "Jan",
           "Feb",
@@ -58,7 +60,7 @@ export function AuthProvider({ children }) {
 
         const TimeCalc = (timing) => {
           const time = new Date(timing * 1000);
-          let hours = time.getUTCHours().toString();
+          let hours = (time.getUTCHours()+1).toString();
           const minutes = time.getMinutes().toString();
           if (hours > 12) {
             hours -= 12;
@@ -74,6 +76,7 @@ export function AuthProvider({ children }) {
             name: res.name,
             lng: res.coord.lon,
             lat: res.coord.lat,
+            time: TimeCalc(),
             sunrise: TimeCalc(res.sys.sunrise),
             sunset: TimeCalc(res.sys.sunset),
             temp: res.main.temp,
@@ -128,6 +131,7 @@ export function AuthProvider({ children }) {
         ];
         setWeeklyWeather(weeklyData)
         setLocationWeather(data);
+        setLoading(false)
         console.log(res)
         console.log(res1);
       } catch (error) {
@@ -138,7 +142,7 @@ export function AuthProvider({ children }) {
   }, [latitude, longitude]);
 
 
-  const value = {locationWeather, weeklyWeather};
+  const value = {locationWeather, weeklyWeather, loading};
   return (
     <ForecastContext.Provider value={value}>
       {children}

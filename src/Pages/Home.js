@@ -3,6 +3,7 @@ import Cloud from "../Components/Icons/Cloud";
 import { useAuth } from "../Context/ForecastContext";
 
 const Home = () => {
+
   const { locationWeather, weeklyWeather } = useAuth();
   return (
     <>
@@ -49,9 +50,15 @@ const Home = () => {
                       <p>Sunrise: {data.sunrise}</p>
                       <p>Sunset: {data.sunset}</p>
                     </div>
-                    <div className="w-3/12 md:w-6/12">
-                      <Sun className={"w-48 h-48 md:h-96 md:w-96 text-white "} />
-                    </div>
+                    {
+                      <div className="w-3/12 md:w-6/12">
+                        <Sun
+                          className={
+                            "w-48 h-48 md:h-96 md:w-96 text-white rotate-270"
+                          }
+                        />
+                      </div>
+                    }
                   </div>
                 </div>
               );
@@ -59,18 +66,21 @@ const Home = () => {
           </ul>
         </div>
         <div className="border-y border-y-white md:my-auto mt-24 px-2">
-          <div className='md:hidden flex justify-between items-center text-center'>
-            <p className='w-2/12'>Date</p>
-            <p className='w-2/12'>Weather ForeCast</p>
-            <p className='w-2/12'>Day Temp</p>
-            <p className='w-2/12'>Night Temp</p>
+          <div className="md:hidden flex justify-between items-center text-center">
+            <p className="w-2/12">Date</p>
+            <p className="w-2/12">Weather ForeCast</p>
+            <p className="w-2/12">Day Temp</p>
+            <p className="w-2/12">Night Temp</p>
           </div>
           <ul className="overflow-x-auto whitespace-nowrap ... scrollbar-hide">
             {weeklyWeather.map((week) => {
               return (
-                <div className="md:w-1/4 text-center flex justify-between md:inline-block my-4" key={week.date}>
-                  <p className='w-2/12'>{week.date}</p>
-                  <p className='w-2/12'>
+                <div
+                  className="md:w-1/4 text-center flex justify-between md:inline-block my-4"
+                  key={week.date}
+                >
+                  <p className="w-2/12">{week.date}</p>
+                  <p className="w-2/12">
                     {week.weather === "Clouds" ? (
                       <Cloud className={"h-6 w-6 text-white"} />
                     ) : week.weather === "sunny" ? (
@@ -81,8 +91,8 @@ const Home = () => {
                       ""
                     )}
                   </p>
-                  <p className='w-2/12'>{`${week.day_temp}${"\u2103"}`}</p>
-                  <p className='w-2/12'>{`${week.night_temp}${"\u2103"}`}</p>
+                  <p className="w-2/12">{`${week.day_temp}${"\u2103"}`}</p>
+                  <p className="w-2/12">{`${week.night_temp}${"\u2103"}`}</p>
                 </div>
               );
             })}

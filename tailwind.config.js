@@ -7,6 +7,9 @@ module.exports = {
         sunrise: "#ECB325",
         sunset: "#ED7301",
       },
+      rotate: {
+        '270': '270deg',
+      }
     },
   },
   plugins: [require("tailwind-scrollbar-hide")],
