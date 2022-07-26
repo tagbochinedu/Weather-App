@@ -56,7 +56,7 @@ const Home = () => {
             })}
           </ul>
         </div>
-        <div className="border-t border-t-white md:my-auto md:flex md:mt-24 mt:28 px-2 py-2">
+        <div className="border-t border-t-white md:my-auto md:flex md:mt-24 mt-28 px-2 py-2">
           <div className="flex md:block md:w-2/12 justify-between items-center text-center md:text-left md:text-lg font-semibold">
             <p className="w-3/12 md:w-full mx-auto">Date</p>
             <span className="absolute right-5 bg-sunset hidden md:block rounded-3xl">
@@ -70,7 +70,7 @@ const Home = () => {
             {weeklyWeather.map((week) => {
               return (
                 <div
-                  className="md:w-1/4 text-center flex justify-between md:inline-block md:border-l-2 md:border-white my-0.5"
+                  className="md:w-1/4 text-center flex justify-between items-center md:inline-block md:border-l-2 md:border-white my-0.5"
                   key={week.date}
                 >
                   <p className="w-3/12 md:w-full mx-auto text-lg font-semibold">
