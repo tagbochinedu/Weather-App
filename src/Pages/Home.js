@@ -7,7 +7,7 @@ const Home = () => {
   const { locationWeather, weeklyWeather } = useAuth();
   return (
     <>
-      <div className="pt-6 text-white ">
+      <div className="pt-2 text-white ">
         <div className="md:pl-6 pl-2">
           <ul>
             {locationWeather.map((data) => {
@@ -56,53 +56,53 @@ const Home = () => {
             })}
           </ul>
         </div>
-        <div className="border-t border-t-white md:my-auto md:flex mt-24 px-2 py-2">
+        <div className="border-t border-t-white md:my-auto md:flex md:mt-24 px-2 py-2">
           <div className="flex md:block md:w-2/12 justify-between items-center text-center md:text-left md:text-lg font-semibold">
-            <p className="w-2/12 md:w-full mx-auto">Date</p>
+            <p className="w-3/12 md:w-full mx-auto">Date</p>
             <span className="absolute right-5 bg-sunset hidden md:block rounded-3xl">
               <ArrowNarrowRightIcon className="h-12 w-12 opacity-80" />
             </span>{" "}
             <p className="w-2/12 md:w-full mx-auto">Weather Forecast</p>
-            <p className="w-2/12 md:w-full mx-auto">Day Temp</p>
-            <p className="w-2/12 md:w-full mx-auto">Night Temp</p>
+            <p className="w-1/12 md:w-full mx-auto">Day Temp</p>
+            <p className="w-1/12 md:w-full mx-auto">Night Temp</p>
           </div>
           <ul className="overflow-x-auto whitespace-nowrap ... scrollbar-hide md:w-10/12">
             {weeklyWeather.map((week) => {
               return (
                 <div
-                  className="md:w-1/4 text-center flex justify-between md:inline-block md:border-l-2 md:border-white"
+                  className="md:w-1/4 text-center flex justify-between md:inline-block md:border-l-2 md:border-white my-0.5"
                   key={week.date}
                 >
-                  <p className="w-2/12 md:w-full mx-auto text-lg font-semibold">
+                  <p className="w-3/12 md:w-full mx-auto text-lg font-semibold">
                     {week.date}
                   </p>
-                  <p className="w-2/12 md:w-full mx-auto">
+                  <p className="w-1/12 md:w-full mx-auto">
                     {week.weather === "Clouds" ? (
                       <CloudIcon
                         className={
-                          "w-2/12 md:w-full h-8 w-8 text-white mx-auto"
+                          "md:w-full h-8 w-8 text-white mx-auto"
                         }
                       />
                     ) : week.weather === "sunny" ? (
                       <SunIcon
                         className={
-                          "w-2/12 md:w-full h-8 w-8 text-white mx-auto"
+                          " md:w-full h-8 w-8 text-white mx-auto"
                         }
                       />
                     ) : week.weather === "Rain" ? (
                       <SunIcon
                         className={
-                          "w-2/12 md:w-full text-white mx-auto h-8 w-8"
+                          "md:w-full text-white mx-auto h-8 w-8"
                         }
                       />
                     ) : (
                       ""
                     )}
                   </p>
-                  <p className="w-2/12 md:w-full mx-auto text-lg font-semibold">{`${
+                  <p className="w-1/12 md:w-full mx-auto text-lg font-semibold">{`${
                     week.day_temp
                   }${"\u2103"}`}</p>
-                  <p className="w-2/12 md:w-full mx-auto text-lg font-semibold">{`${
+                  <p className="w-1/12 md:w-full mx-auto text-lg font-semibold">{`${
                     week.night_temp
                   }${"\u2103"}`}</p>
                 </div>
