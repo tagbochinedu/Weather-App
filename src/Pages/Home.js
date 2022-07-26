@@ -23,27 +23,18 @@ const Home = () => {
                       }${"\u2103"}`}</p>
                       <div>
                         <p>
-                          {" "}
-                          It's
                           <span className="font-bold">
                             {data.weather === "Clouds"
                               ? " Cloudy"
                               : data.weather === "sunny"
                               ? "Sunny"
                               : data.weather === "Rain"
-                              ? "Raining"
-                              : ""}{" "}
-                          </span>{" "}
-                          outside!!
+                              ? "Rainy"
+                              : ""}
+                          </span>
                         </p>
                         <p className="font-semibold">
-                          {data.weather === "Clouds"
-                            ? "Excellent weather for a walk"
-                            : data.weather === "sunny"
-                            ? "Its hot outside!!!"
-                            : data.weather === "Rain"
-                            ? "A rainy day, I see"
-                            : ""}
+                          {data.weatherDesc}
                         </p>
                       </div>
 
