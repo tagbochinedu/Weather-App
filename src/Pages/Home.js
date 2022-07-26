@@ -1,6 +1,6 @@
-import Sun from "../Components/Icons/Sun";
-import Cloud from "../Components/Icons/Cloud";
-import Arrow from "../Components/Icons/Arrow";
+import { SunIcon } from "@heroicons/react/solid";
+import {CloudIcon} from "@heroicons/react/solid";
+import {ArrowNarrowRightIcon} from "@heroicons/react/solid";
 import { useAuth } from "../Context/ForecastContext";
 
 const Home = () => {
@@ -43,7 +43,7 @@ const Home = () => {
                     </div>
                     {
                       <div className="w-3/12 md:w-6/12">
-                        <Sun
+                        <SunIcon
                           className={
                             "w-48 h-48 md:h-96 md:w-96 text-white rotate-270"
                           }
@@ -60,7 +60,7 @@ const Home = () => {
           <div className="flex md:block md:w-2/12 justify-between items-center text-center md:text-left md:text-lg font-semibold">
             <p className="w-2/12 md:w-full mx-auto">Date</p>
             <span className="absolute right-5 bg-sunset hidden md:block rounded-3xl">
-              <Arrow className="h-12 w-12 opacity-80" />
+              <ArrowNarrowRightIcon className="h-12 w-12 opacity-80" />
             </span>{" "}
             <p className="w-2/12 md:w-full mx-auto">Weather Forecast</p>
             <p className="w-2/12 md:w-full mx-auto">Day Temp</p>
@@ -78,19 +78,19 @@ const Home = () => {
                   </p>
                   <p className="w-2/12 md:w-full mx-auto">
                     {week.weather === "Clouds" ? (
-                      <Cloud
+                      <CloudIcon
                         className={
                           "w-2/12 md:w-full h-8 w-8 text-white mx-auto"
                         }
                       />
                     ) : week.weather === "sunny" ? (
-                      <Sun
+                      <SunIcon
                         className={
                           "w-2/12 md:w-full h-8 w-8 text-white mx-auto"
                         }
                       />
                     ) : week.weather === "Rain" ? (
-                      <Sun
+                      <SunIcon
                         className={
                           "w-2/12 md:w-full text-white mx-auto h-8 w-8"
                         }

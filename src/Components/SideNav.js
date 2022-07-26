@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import MenuOpen from "./Icons/MenuOpen";
-import MenuClose from "./Icons/MenuClose";
+import { MenuIcon } from "@heroicons/react/solid";
+import { XIcon } from "@heroicons/react/solid";
 import { useAuth } from "../Context/ForecastContext";
 
 const SideNav = () => {
@@ -27,15 +27,15 @@ const SideNav = () => {
             setMenu(!menu);
           }}
         >
-          {!menu ? <MenuOpen /> : <MenuClose />}
+          {!menu ? <MenuIcon className='text-white w-10 h-10' /> : <XIcon className='text-white w-10 h-10' />}
         </span>
-        <div className='md:w-6/12 text-center block md:hidden text-xl font-bold text-white'>
-        <ul>
-          {locationWeather.map((data) => {
-            return <p key={data.date}>{data.date}</p>;
-          })}
-        </ul>
-      </div>
+        <div className="md:w-6/12 text-center block md:hidden text-xl font-bold text-white">
+          <ul>
+            {locationWeather.map((data) => {
+              return <p key={data.date}>{data.date}</p>;
+            })}
+          </ul>
+        </div>
         <div className="text-xl font-bold font-serif text-hdr outline-8 flex  justify-between">
           <img
             src="https://cdn-icons-png.flaticon.com/512/1779/1779940.png"
@@ -44,7 +44,7 @@ const SideNav = () => {
           />
         </div>
       </div>
-      <div className='w-6/12 text-center md:block hidden text-xl font-bold text-white'>
+      <div className="w-6/12 text-center md:block hidden text-xl font-bold text-white">
         <ul>
           {locationWeather.map((data) => {
             return <p key={data.date}>{data.date}</p>;
