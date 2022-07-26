@@ -56,7 +56,7 @@ const Home = () => {
             })}
           </ul>
         </div>
-        <div className="border-t border-t-white md:my-auto md:flex mt-24 px-2 py-2">
+        <div className="border-t border-t-white md:my-auto md:flex md:mt-24 mt:28 px-2 py-2">
           <div className="flex md:block md:w-2/12 justify-between items-center text-center md:text-left md:text-lg font-semibold">
             <p className="w-3/12 md:w-full mx-auto">Date</p>
             <span className="absolute right-5 bg-sunset hidden md:block rounded-3xl">
