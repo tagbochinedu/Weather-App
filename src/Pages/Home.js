@@ -7,8 +7,8 @@ const Home = () => {
   const { locationWeather, weeklyWeather } = useAuth();
   return (
     <>
-      <div className="pt-2 text-white ">
-        <div className="md:pl-6 pl-2">
+      <div className="pt-8 text-white ">
+        <div className="md:pl-12 pl-2">
           <ul>
             {locationWeather.map((data) => {
               return (
@@ -17,7 +17,7 @@ const Home = () => {
                     {data.name}, {data.country}
                   </p>
                   <div className="flex items-center justify-between overflow-x-hidden">
-                    <div className="mt-12 md:w-4/12">
+                    <div className="md:w-4/12">
                       <p className="text-6xl font-bold mb-4">{`${
                         data.temp
                       }${"\u2103"}`}</p>
@@ -56,27 +56,27 @@ const Home = () => {
             })}
           </ul>
         </div>
-        <div className="border-t border-t-white md:my-auto md:flex md:mt-24 mt-28 px-2 py-2">
-          <div className="flex md:block md:w-2/12 justify-between items-center text-center md:text-left md:text-lg font-semibold">
-            <p className="w-3/12 md:w-full mx-auto">Date</p>
+        <div className="border-t border-t-white md:my-auto md:flex md:mt-24 mt-28 md:px-12 px-2 py-2">
+          <div className="flex md:block md:w-2/12 justify-between items-center md:text-left md:text-lg font-semibold">
+            <p className="w-2/12 md:w-full text-center">Date</p>
             <span className="absolute right-5 bg-sunset hidden md:block rounded-3xl">
               <ArrowNarrowRightIcon className="h-12 w-12 opacity-80" />
             </span>{" "}
-            <p className="w-2/12 md:w-full mx-auto">Weather Forecast</p>
-            <p className="w-1/12 md:w-full mx-auto">Day Temp</p>
-            <p className="w-1/12 md:w-full mx-auto">Night Temp</p>
+            <p className="w-2/12 md:w-full text-center">Weather Forecast</p>
+            <p className="w-2/12 md:w-full text-center">Day Temp</p>
+            <p className="w-2/12 md:w-full text-center">Night Temp</p>
           </div>
-          <ul className="overflow-x-auto whitespace-nowrap ... scrollbar-hide md:w-10/12">
+          <ul className="overflow-x-auto whitespace-nowrap ... scrollbar-hide w-full">
             {weeklyWeather.map((week) => {
               return (
                 <div
                   className="md:w-1/4 text-center flex justify-between items-center md:inline-block md:border-l-2 md:border-white my-0.5"
                   key={week.date}
                 >
-                  <p className="w-3/12 md:w-full mx-auto text-lg font-semibold">
+                  <p className="w-2/12 md:w-full text-center text-lg font-semibold">
                     {week.date}
                   </p>
-                  <p className="w-1/12 md:w-full mx-auto">
+                  <p className="w-2/12 md:w-full">
                     {week.weather === "Clouds" ? (
                       <CloudIcon
                         className={
@@ -99,10 +99,10 @@ const Home = () => {
                       ""
                     )}
                   </p>
-                  <p className="w-1/12 md:w-full mx-auto text-lg font-semibold">{`${
+                  <p className="w-2/12 md:w-full text-center text-lg font-semibold">{`${
                     week.day_temp
                   }${"\u2103"}`}</p>
-                  <p className="w-1/12 md:w-full mx-auto text-lg font-semibold">{`${
+                  <p className="w-2/12 md:w-full text-center text-lg font-semibold">{`${
                     week.night_temp
                   }${"\u2103"}`}</p>
                 </div>

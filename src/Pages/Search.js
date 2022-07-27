@@ -3,15 +3,15 @@ import { SunIcon } from "@heroicons/react/solid";
 import { useAuth } from "../Context/ForecastContext";
 
 const Search = () => {
-  const {submitHandler, setCity, data, setSearchLoader, searchLoader} = useAuth()
-  
+  const { submitHandler, setCity, data, setSearchLoader, searchLoader } =
+    useAuth();
 
   const changeHandler = (e) => {
     setSearchLoader(true);
     setCity(e.target.value);
     console.log(e.target.value);
   };
-  
+
   return (
     <>
       <form
@@ -36,7 +36,47 @@ const Search = () => {
         {searchLoader ? (
           <SunIcon className="animate-spin text-white w-16 h-16" />
         ) : (
-          ""
+          <ul>
+            {data.map((city) => {
+              return (
+                <div className="glass p-6 md:w-96  mt-10 mx-5  text-[color:white] rounded-lg border shadow-md sm:p-8  dark:border-gray-700" key={city.name}>
+                  <div className="grid  grid-cols-2  md:gap-40 mb-20">
+                    <div>
+                      <h5 className=" text-4xl font-bold pb-2 text-white dark:text-white">
+                        {city.name}
+                      </h5>
+                      <p className=" text-xl text-base text-white">
+                        {`${city.temp} \u00B0C`}
+                      </p>
+                    </div>
+                    <div className="md:pt-5 pt-10 pl-20 md:pl-20  ">
+                      <p className=" text-2xl text-base rotate-90  text-white">
+                        {city.weatherDesc}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="grid  grid-cols-2 gap-20  md:gap-40 mt-10">
+                    <div>
+                      <h5 className=" text-base   text-white">
+                        SunRise
+                      </h5>
+                      <p className=" md:text-xl  text-lg text-white">
+                        {city.sunrise}
+                      </p>
+                    </div>
+                    <div>
+                      <h5 className=" text-base   text-white">
+                        SunSet
+                      </h5>
+                      <p className=" md:text-lg text-lg text-white">
+                        {city.sunset}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </ul>
         )}
       </div>
     </>

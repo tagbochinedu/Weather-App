@@ -12,11 +12,23 @@ export function AuthProvider({ children }) {
   const [weeklyWeather, setWeeklyWeather] = useState([]);
   const [loading, setLoading] = useState(true);
   const [city, setCity] = useState("");
-  const [data, setData] = useState();
-  const [errorText, setErrorText] = useState('')
-  const [error, setError] = useState(false)
+  const [data, setData] = useState([]);
+  const [errorText, setErrorText] = useState("");
+  const [error, setError] = useState(false);
   const [searchLoader, setSearchLoader] = useState(false);
   const API_KEY = process.env.REACT_APP_API_KEY;
+
+  const TimeCalc = (timing) => {
+    const time = new Date(timing * 1000);
+    let hours = (time.getUTCHours() + 1).toString();
+    const minutes = time.getMinutes().toString();
+    if (hours > 12) {
+      hours -= 12;
+      return `${hours}:${minutes}pm`;
+    } else {
+      return `${hours}:${minutes}am`;
+    }
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -25,25 +37,50 @@ export function AuthProvider({ children }) {
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
       );
       const res = await response.json();
+
+      const duskCalc = () => {
+        let  dusk = [];
+        let sunset = [];
+        const dusktime = new Date();
+        let duskhours = (dusktime.getUTCHours() + 1).toString();
+        const duskminutes = dusktime.getMinutes().toString();
+
+        const sunsettime = new Date(res.sys.sunset);
+        let sunsethours = (sunsettime.getUTCHours() + 1).toString();
+        const sunsetminutes = sunsettime.getMinutes().toString();
+        console.log(sunsettime, sunsethours, sunsetminutes)
+        if (duskhours > 12) {
+          duskhours -= 12;
+          dusk = [duskhours, duskminutes];
+        }        
+        if (sunsethours > 12) {
+          sunsethours -= 12;
+          sunset = [sunsethours, sunsetminutes]
+        } 
+        console.log(dusk, sunset)
+        return (dusk[0]>=sunset[0] && dusk[1]>sunset[1])
+      };
+
       const resData = [
         {
+          dusk: duskCalc(),
           name: res.name,
           temp: res.main.temp,
           min_temp: res.main.temp_min,
           max_temp: res.main.temp_max,
           country: res.sys.country,
-          sunrise: res.sys.sunrise,
-          sunset: res.sys.sunset,
+          sunrise: TimeCalc(res.sys.sunrise),
+          sunset: TimeCalc(res.sys.sunset),
           weather: res.weather[0].main,
           weatherDesc: res.weather[0].description,
         },
       ];
       setData(resData);
       setSearchLoader(false);
-      console.log(res);
-    } catch(error) {
-      console.log(error.message)
-      setError(true)
+      console.log(data);
+    } catch (error) {
+      console.log(error.message);
+      setError(true);
     }
   };
 
@@ -90,18 +127,6 @@ export function AuthProvider({ children }) {
           const date = time.getDate();
           const day = days[time.getDay()];
           return `${day}, ${month} ${date}`;
-        };
-
-        const TimeCalc = (timing) => {
-          const time = new Date(timing * 1000);
-          let hours = (time.getUTCHours() + 1).toString();
-          const minutes = time.getMinutes().toString();
-          if (hours > 12) {
-            hours -= 12;
-            return `${hours}:${minutes}pm`;
-          } else {
-            return `${hours}:${minutes}am`;
-          }
         };
 
         const data = [
@@ -182,7 +207,7 @@ export function AuthProvider({ children }) {
     setCity,
     data,
     searchLoader,
-    setSearchLoader
+    setSearchLoader,
   };
   return (
     <ForecastContext.Provider value={value}>

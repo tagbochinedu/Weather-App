@@ -19,7 +19,7 @@ const SideNav = () => {
     }
   }, [width]);
   return (
-    <header className="md:flex md:justify-between items-center  bg-inherit w-full md:px-6 px-2">
+    <header className="md:flex md:justify-between items-center  bg-inherit w-full md:pl-6 md:px-12 px-2">
       <div className="md:w-2/12 flex justify-between items-center">
         <span
           className="md:hidden"
@@ -39,7 +39,7 @@ const SideNav = () => {
         <div className="text-xl font-bold font-serif text-hdr outline-8 flex  justify-between">
           <img
             src="https://cdn-icons-png.flaticon.com/512/1779/1779940.png"
-            className="h-16 w-16 mr-6"
+            className="h-16 w-16"
             alt="logo"
           />
         </div>

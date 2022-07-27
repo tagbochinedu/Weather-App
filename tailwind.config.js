@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       colors: {
         sunrise: "#ECB325",
-        sunset: "#ED7301",
+        sunset: "#f54806",
       },
       rotate: {
         '270': '270deg',
