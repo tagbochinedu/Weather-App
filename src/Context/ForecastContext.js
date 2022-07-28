@@ -99,9 +99,9 @@ export function AuthProvider({ children }) {
         {
           dusk: duskCalc(res.sys.sunset),
           name: res.name,
-          temp: res.main.temp,
-          min_temp: res.main.temp_min,
-          max_temp: res.main.temp_max,
+          temp: Math.round(res.main.temp),
+          min_temp: Math.round(res.main.temp_min),
+          max_temp: Math.round(res.main.temp_max),
           country: res.sys.country,
           sunrise: TimeCalc(res.sys.sunrise),
           sunset: TimeCalc(res.sys.sunset),
