@@ -71,7 +71,7 @@ const Search = () => {
                   {data.map((city) => {
                     return (
                       <div
-                        className={`${"glass p-6 md:w-96  mt-10 mx-5  text-[color:white] rounded-lg border shadow-md sm:p-8  dark:border-gray-700"} ${
+                        className={`${"glass p-6 md:w-96  mt-10 mx-5  text-[color:white] rounded-lg border shadow-md sm:p-8  border-none shadow-lg shadow-black"} ${
                           city.dusk
                             ? "bg-gradient-to-bl from-midnight to-dawn"
                             : "bg-gradient-to-bl from-sunrise to-sunset"

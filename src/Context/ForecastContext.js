@@ -202,8 +202,6 @@ export function AuthProvider({ children }) {
         setDusk(duskCalc(res.sys.sunset));
         setLocationWeather(data);
         setLoading(false);
-        console.log(data.dusk);
-        console.log(res1);
       } catch (error) {
         console.log(error);
       }
