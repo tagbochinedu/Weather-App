@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 const ForecastContext = React.createContext();
 
 export function useAuth() {
@@ -18,17 +24,67 @@ export function AuthProvider({ children }) {
   const [searchLoader, setSearchLoader] = useState(false);
   const API_KEY = process.env.REACT_APP_API_KEY;
 
-  const TimeCalc = (timing) => {
+  const months = useMemo(() => {
+    return [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "June",
+      "July",
+      "Aug",
+      "Sept",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+  }, []);
+  const days = useMemo(() => {
+    return ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+  }, []);
+
+  const TimeCalc = useCallback((timing) => {
     const time = new Date(timing * 1000);
-    let hours = (time.getUTCHours() + 1).toString();
-    const minutes = time.getMinutes().toString();
+    let hours = time.getUTCHours() + 1;
+    const minutes = time.getMinutes();
     if (hours > 12) {
       hours -= 12;
       return `${hours}:${minutes}pm`;
     } else {
       return `${hours}:${minutes}am`;
     }
-  };
+  }, []);
+  const duskCalc = useCallback((timing) => {
+    let dusk = [];
+    let sunset = [];
+    const dusktime = new Date();
+    let duskhours = dusktime.getUTCHours() + 1;
+    const duskminutes = dusktime.getMinutes();
+    dusk = [duskhours, duskminutes];
+    const sunsettime = new Date(timing * 1000);
+    let sunsethours = sunsettime.getUTCHours() + 1;
+    const sunsetminutes = sunsettime.getMinutes();
+    sunset = [sunsethours, sunsetminutes];
+    return (
+      dusk[0] > sunset[0] || (dusk[0] === sunset[0] && dusk[1] > sunset[1])
+    );
+  }, []);
+  const DateCalc = useCallback(
+    (timing) => {
+      let time = "";
+      if (timing) {
+        time = new Date(timing * 1000);
+      } else {
+        time = new Date();
+      }
+      const month = months[time.getMonth()];
+      const date = time.getDate();
+      const day = days[time.getDay()];
+      return `${day}, ${month} ${date}`;
+    },
+    [days, months]
+  );
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -38,32 +94,9 @@ export function AuthProvider({ children }) {
       );
       const res = await response.json();
 
-      const duskCalc = () => {
-        let  dusk = [];
-        let sunset = [];
-        const dusktime = new Date();
-        let duskhours = (dusktime.getUTCHours() + 1).toString();
-        const duskminutes = dusktime.getMinutes().toString();
-
-        const sunsettime = new Date(res.sys.sunset);
-        let sunsethours = (sunsettime.getUTCHours() + 1).toString();
-        const sunsetminutes = sunsettime.getMinutes().toString();
-        console.log(sunsettime, sunsethours, sunsetminutes)
-        if (duskhours > 12) {
-          duskhours -= 12;
-          dusk = [duskhours, duskminutes];
-        }        
-        if (sunsethours > 12) {
-          sunsethours -= 12;
-          sunset = [sunsethours, sunsetminutes]
-        } 
-        console.log(dusk, sunset)
-        return (dusk[0]>=sunset[0] && dusk[1]>sunset[1])
-      };
-
       const resData = [
         {
-          dusk: duskCalc(),
+          dusk: duskCalc(res.sys.sunset),
           name: res.name,
           temp: res.main.temp,
           min_temp: res.main.temp_min,
@@ -77,7 +110,7 @@ export function AuthProvider({ children }) {
       ];
       setData(resData);
       setSearchLoader(false);
-      console.log(data);
+      console.log(res);
     } catch (error) {
       console.log(error.message);
       setError(true);
@@ -101,36 +134,9 @@ export function AuthProvider({ children }) {
         const res = await response.json();
         const res1 = await response1.json();
 
-        const months = [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "June",
-          "July",
-          "Aug",
-          "Sept",
-          "Oct",
-          "Nov",
-          "Dec",
-        ];
-        const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
-        const DateCalc = (timing) => {
-          let time = "";
-          if (timing) {
-            time = new Date(timing * 1000);
-          } else {
-            time = new Date();
-          }
-          const month = months[time.getMonth()];
-          const date = time.getDate();
-          const day = days[time.getDay()];
-          return `${day}, ${month} ${date}`;
-        };
-
         const data = [
           {
+            dusk: duskCalc(res.sys.sunset),
             country: res.sys.country,
             name: res.name,
             lng: res.coord.lon,
@@ -194,10 +200,14 @@ export function AuthProvider({ children }) {
         console.log(res1);
       } catch (error) {
         console.log(error);
+        setError(true);
+        setErrorText(
+          "That place cannot be found. Please check the spelling or try searching for somewhere else"
+        );
       }
     };
     fetchWeather();
-  }, [latitude, longitude, API_KEY]);
+  }, [latitude, longitude, API_KEY, DateCalc, TimeCalc, duskCalc]);
 
   const value = {
     locationWeather,
@@ -208,6 +218,9 @@ export function AuthProvider({ children }) {
     data,
     searchLoader,
     setSearchLoader,
+    setError,
+    errorText,
+    error,
   };
   return (
     <ForecastContext.Provider value={value}>

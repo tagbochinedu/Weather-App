@@ -1,15 +1,23 @@
 import { SearchIcon } from "@heroicons/react/solid";
-import { SunIcon } from "@heroicons/react/solid";
+import { SunIcon, MoonIcon } from "@heroicons/react/solid";
 import { useAuth } from "../Context/ForecastContext";
 
 const Search = () => {
-  const { submitHandler, setCity, data, setSearchLoader, searchLoader } =
-    useAuth();
+  const {
+    submitHandler,
+    setCity,
+    data,
+    setSearchLoader,
+    searchLoader,
+    setError,
+    errorText,
+    error,
+  } = useAuth();
 
   const changeHandler = (e) => {
+    setError(false);
     setSearchLoader(true);
     setCity(e.target.value);
-    console.log(e.target.value);
   };
 
   return (
@@ -33,51 +41,74 @@ const Search = () => {
       </form>
 
       <div className="h-full flex justify-center items-center">
-        {searchLoader ? (
-          <SunIcon className="animate-spin text-white w-16 h-16" />
-        ) : (
-          <ul>
-            {data.map((city) => {
-              return (
-                <div className="glass p-6 md:w-96  mt-10 mx-5  text-[color:white] rounded-lg border shadow-md sm:p-8  dark:border-gray-700" key={city.name}>
-                  <div className="grid  grid-cols-2  md:gap-40 mb-20">
-                    <div>
-                      <h5 className=" text-4xl font-bold pb-2 text-white dark:text-white">
-                        {city.name}
-                      </h5>
-                      <p className=" text-xl text-base text-white">
-                        {`${city.temp} \u00B0C`}
-                      </p>
-                    </div>
-                    <div className="md:pt-5 pt-10 pl-20 md:pl-20  ">
-                      <p className=" text-2xl text-base rotate-90  text-white">
-                        {city.weatherDesc}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="grid  grid-cols-2 gap-20  md:gap-40 mt-10">
-                    <div>
-                      <h5 className=" text-base   text-white">
-                        SunRise
-                      </h5>
-                      <p className=" md:text-xl  text-lg text-white">
-                        {city.sunrise}
-                      </p>
-                    </div>
-                    <div>
-                      <h5 className=" text-base   text-white">
-                        SunSet
-                      </h5>
-                      <p className=" md:text-lg text-lg text-white">
-                        {city.sunset}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </ul>
-        )}
+        <div>
+          {error ? (
+            <p>{errorText}</p>
+          ) : (
+            <div>
+              {searchLoader ? (
+                <SunIcon className="animate-spin text-white w-16 h-16" />
+              ) : (
+                <ul>
+                  {data.map((city) => {
+                    return (
+                      <div
+                        className={`${"glass p-6 md:w-96  mt-10 mx-5  text-[color:white] rounded-lg border shadow-md sm:p-8  dark:border-gray-700"} ${
+                          city.dusk
+                            ? "bg-gradient-to-bl from-midnight to-dawn"
+                            : "bg-gradient-to-bl from-sunrise to-sunset"
+                        }`}
+                        key={city.name}
+                      >
+                        <div className="grid  grid-cols-2  md:gap-40">
+                          <div>
+                            <h5 className=" text-4xl font-bold pb-2 text-white dark:text-white">
+                              {city.name}
+                            </h5>
+                            <p className=" text-xl text-base text-white">
+                              {`${city.temp} \u00B0C`}
+                            </p>
+                          </div>
+                          <div className="md:pt-5 pt-10 pl-20 md:pl-20  ">
+                            <p className=" text-2xl text-base rotate-90  text-white">
+                              {city.weatherDesc}
+                            </p>
+                          </div>
+                        </div>
+                        <div>
+                          {city.dusk ? (
+                            <MoonIcon className="h-24 w-24" />
+                          ) : (
+                            <SunIcon className="h-24 w-24" />
+                          )}
+                        </div>
+                        <div className="grid  grid-cols-2 gap-20  md:gap-40 mt-10">
+                          <div>
+                            <h5 className=" text-base   text-white">
+                              Max Temp
+                            </h5>
+                            <p className=" md:text-xl  text-lg text-white">
+                              {`${city.max_temp} \u00B0C`}
+                            </p>
+                          </div>
+
+                          <div>
+                            <h5 className=" text-base   text-white">
+                              Min Temp
+                            </h5>
+                            <p className=" md:text-lg text-lg text-white">
+                              {`${city.min_temp} \u00B0C`}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

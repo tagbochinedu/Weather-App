@@ -1,6 +1,4 @@
-import { SunIcon } from "@heroicons/react/solid";
-import {CloudIcon} from "@heroicons/react/solid";
-import {ArrowNarrowRightIcon} from "@heroicons/react/solid";
+import { SunIcon, CloudIcon, ArrowNarrowRightIcon} from "@heroicons/react/solid";
 import { useAuth } from "../Context/ForecastContext";
 
 const Home = () => {
