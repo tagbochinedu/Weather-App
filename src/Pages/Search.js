@@ -12,11 +12,17 @@ const Search = () => {
     setError,
     errorText,
     error,
+    dusk,
   } = useAuth();
 
   const changeHandler = (e) => {
     setError(false);
-    setSearchLoader(true);
+    if (e.target.value.trim().length === 0) {
+      setSearchLoader(false);
+    } else {
+      setSearchLoader(true);
+    }
+
     setCity(e.target.value);
   };
 
@@ -36,18 +42,30 @@ const Search = () => {
           type="submit"
           className="w-2/12 md:w-1/12 bg-white rounded-r-2xl"
         >
-          <SearchIcon className="w-12 h-12 text-sunrise mx-auto" />
+          <SearchIcon
+            className={`${"w-12 h-12 mx-auto"} ${
+              dusk ? "text-dawn" : "text-sunrise"
+            }`}
+          />
         </button>
       </form>
 
-      <div className="h-full flex justify-center items-center">
+      <div className="h-full flex justify-center items-center px-4">
         <div>
           {error ? (
-            <p>{errorText}</p>
+            <p className="text-white font-semibold text-md text-center">
+              {errorText}
+            </p>
           ) : (
             <div>
               {searchLoader ? (
-                <SunIcon className="animate-spin text-white w-16 h-16" />
+                <div>
+                  {dusk ? (
+                    <MoonIcon className="animate-ping text-white w-16 h-16" />
+                  ) : (
+                    <SunIcon className="animate-spin text-white w-16 h-16" />
+                  )}
+                </div>
               ) : (
                 <ul>
                   {data.map((city) => {

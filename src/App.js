@@ -6,19 +6,25 @@ import SideNav from "./Components/SideNav";
 import { useAuth } from "./Context/ForecastContext";
 
 export default function App() {
-  const { loading } = useAuth();
+  const { loading, dusk } = useAuth();
   return (
     <div
-      className={`${"bg-gradient-to-bl from-sunrise to-sunset pt-6 min-h-screen"} ${loading? 'flex justify-center items-center': ''}`}
+      className={`${"pt-6 min-h-screen"} ${
+        loading ? "flex justify-center items-center" : ""
+      } ${
+        dusk
+          ? "bg-gradient-to-bl from-midnight to-dawn"
+          : "bg-gradient-to-bl from-sunrise to-sunset"
+      }`}
     >
       {loading ? (
-          <SunIcon className="animate-spin text-white w-16 h-16" />
+        <SunIcon className="animate-spin text-white w-16 h-16" />
       ) : (
         <>
           <SideNav />
           <Routes>
             <Route exact path="/" element={<Home />} />
-            <Route exact path='/search' element={<Search/>}/>
+            <Route exact path="/search" element={<Search />} />
           </Routes>
         </>
       )}

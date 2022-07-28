@@ -1,8 +1,13 @@
-import { SunIcon, CloudIcon, ArrowNarrowRightIcon} from "@heroicons/react/solid";
+import {
+  SunIcon,
+  CloudIcon,
+  ArrowNarrowRightIcon,
+  MoonIcon,
+} from "@heroicons/react/solid";
 import { useAuth } from "../Context/ForecastContext";
 
 const Home = () => {
-  const { locationWeather, weeklyWeather } = useAuth();
+  const { locationWeather, weeklyWeather, dusk } = useAuth();
   return (
     <>
       <div className="pt-8 text-white ">
@@ -31,23 +36,20 @@ const Home = () => {
                               : ""}
                           </span>
                         </p>
-                        <p className="font-semibold">
-                          {data.weatherDesc}
-                        </p>
+                        <p className="font-semibold">{data.weatherDesc}</p>
                       </div>
 
                       <p>Sunrise: {data.sunrise}</p>
                       <p>Sunset: {data.sunset}</p>
                     </div>
-                    {
-                      <div className="w-3/12 md:w-6/12">
-                        <SunIcon
-                          className={
-                            "w-48 h-48 md:h-96 md:w-96 text-white rotate-270"
-                          }
-                        />
-                      </div>
-                    }
+
+                    <div className=" md:w-6/12">
+                      {dusk ? (
+                        <MoonIcon className="w-48 h-48 md:h-96 md:w-96 text-white rotate-270" />
+                      ) : (
+                        <SunIcon className="w-48 h-48 md:h-96 md:w-96 text-white rotate-270" />
+                      )}
+                    </div>
                   </div>
                 </div>
               );
@@ -77,22 +79,14 @@ const Home = () => {
                   <p className="w-2/12 md:w-full">
                     {week.weather === "Clouds" ? (
                       <CloudIcon
-                        className={
-                          "md:w-full h-8 w-8 text-white mx-auto"
-                        }
+                        className="md:w-full h-8 w-8 text-white mx-auto"
                       />
                     ) : week.weather === "sunny" ? (
                       <SunIcon
-                        className={
-                          " md:w-full h-8 w-8 text-white mx-auto"
-                        }
+                        className="md:w-full h-8 w-8 text-white mx-auto"
                       />
                     ) : week.weather === "Rain" ? (
-                      <SunIcon
-                        className={
-                          "md:w-full text-white mx-auto h-8 w-8"
-                        }
-                      />
+                      <ion-icon name="rainy-outline" size='large' className='text-white'></ion-icon>
                     ) : (
                       ""
                     )}

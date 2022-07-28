@@ -22,6 +22,7 @@ export function AuthProvider({ children }) {
   const [errorText, setErrorText] = useState("");
   const [error, setError] = useState(false);
   const [searchLoader, setSearchLoader] = useState(false);
+  const [dusk, setDusk] = useState();
   const API_KEY = process.env.REACT_APP_API_KEY;
 
   const months = useMemo(() => {
@@ -111,9 +112,13 @@ export function AuthProvider({ children }) {
       setData(resData);
       setSearchLoader(false);
       console.log(res);
+      setError(false);
     } catch (error) {
       console.log(error.message);
       setError(true);
+      setErrorText(
+        "location cannot be found. Check the spelling or search for another location"
+      );
     }
   };
 
@@ -194,16 +199,13 @@ export function AuthProvider({ children }) {
           },
         ];
         setWeeklyWeather(weeklyData);
+        setDusk(duskCalc(res.sys.sunset));
         setLocationWeather(data);
         setLoading(false);
-        console.log(data);
+        console.log(data.dusk);
         console.log(res1);
       } catch (error) {
         console.log(error);
-        setError(true);
-        setErrorText(
-          "That place cannot be found. Please check the spelling or try searching for somewhere else"
-        );
       }
     };
     fetchWeather();
@@ -215,12 +217,14 @@ export function AuthProvider({ children }) {
     loading,
     submitHandler,
     setCity,
+    setData,
     data,
     searchLoader,
     setSearchLoader,
     setError,
     errorText,
     error,
+    dusk,
   };
   return (
     <ForecastContext.Provider value={value}>
