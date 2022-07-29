@@ -109,7 +109,7 @@ const Home = () => {
         <div className="">
           <h1 className="text-4xl mt-24 text-white text-center font-bold mb-6">
             {" "}
-            Major Cities Around The World
+            Major Cities In Africa
           </h1>
           <div className="h-full  items-center px-4">
             {
