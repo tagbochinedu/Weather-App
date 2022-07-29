@@ -1,13 +1,15 @@
 import {
   SunIcon,
   CloudIcon,
-  ArrowNarrowRightIcon,
   MoonIcon,
 } from "@heroicons/react/solid";
 import { useAuth } from "../Context/ForecastContext";
+import { useAuth1 } from "../Context/CitiesContext";
+import Footer from '../Components/Footer'
 
 const Home = () => {
   const { locationWeather, weeklyWeather, dusk } = useAuth();
+  const { data } = useAuth1();
   return (
     <>
       <div className="pt-8 text-white ">
@@ -63,9 +65,6 @@ const Home = () => {
           <div className="border-y border-y-white md:my-auto md:flex  md:px-12 px-2 py-2">
             <div className="flex md:block md:w-2/12 justify-between items-center md:text-left md:text-lg font-semibold">
               <p className="w-2/12 md:w-full text-center">Date</p>
-              <span className="absolute right-5 bg-sunset hidden md:block rounded-3xl">
-                <ArrowNarrowRightIcon className="h-12 w-12 opacity-80" />
-              </span>{" "}
               <p className="w-2/12 md:w-full text-center">Weather Forecast</p>
               <p className="w-2/12 md:w-full text-center">Day Temp</p>
               <p className="w-2/12 md:w-full text-center">Night Temp</p>
@@ -112,8 +111,65 @@ const Home = () => {
             {" "}
             Major Cities Around The World
           </h1>
+          <div className="h-full  items-center px-4">
+            {
+              <ul className="flex justify-between flex-wrap">
+                {data.map((city) => {
+                  return (
+                    <div
+                      className={`${"glass p-6 md:w-96  mt-10 mx-5  text-[color:white] rounded-lg border shadow-md sm:p-8  border-none shadow-lg shadow-black"} ${
+                        city.dusk
+                          ? "bg-gradient-to-bl from-midnight to-dawn"
+                          : "bg-gradient-to-bl from-sunrise to-sunset"
+                      }`}
+                      key={city.name}
+                    >
+                      <div className="grid  grid-cols-2  md:gap-40">
+                        <div>
+                          <h5 className=" text-4xl font-bold pb-2 text-white dark:text-white">
+                            {city.name}
+                          </h5>
+                          <p className=" text-xl text-base text-white">
+                            {`${city.temp} \u00B0C`}
+                          </p>
+                        </div>
+                        <div className="md:pt-5 pt-10 pl-20 md:pl-20  ">
+                          <p className=" text-2xl text-base rotate-90  text-white">
+                            {city.weatherDesc}
+                          </p>
+                        </div>
+                      </div>
+                      <div>
+                        {city.dusk ? (
+                          <MoonIcon className="h-24 w-24" />
+                        ) : (
+                          <SunIcon className="h-24 w-24" />
+                        )}
+                      </div>
+                      <div className="grid  grid-cols-2 gap-20  md:gap-40 mt-10">
+                        <div>
+                          <h5 className=" text-base   text-white">Max Temp</h5>
+                          <p className=" md:text-xl  text-lg text-white">
+                            {`${city.max_temp} \u00B0C`}
+                          </p>
+                        </div>
+
+                        <div>
+                          <h5 className=" text-base   text-white">Min Temp</h5>
+                          <p className=" md:text-lg text-lg text-white">
+                            {`${city.min_temp} \u00B0C`}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </ul>
+            }
+          </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

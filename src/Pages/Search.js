@@ -27,7 +27,7 @@ const Search = () => {
   };
 
   return (
-    <>
+    <div className='min-h-screen'>
       <form
         onSubmit={submitHandler}
         className="my-12 border-4 border-white w-9/12 md:w-7/12 mx-auto flex justify-center rounded-3xl"
@@ -50,7 +50,7 @@ const Search = () => {
         </button>
       </form>
 
-      <div className="h-full flex justify-center items-center px-4">
+      <div className="min-h-full flex justify-center items-center px-4 mb-4">
         <div>
           {error ? (
             <p className="text-white font-semibold text-md text-center">
@@ -128,7 +128,8 @@ const Search = () => {
           )}
         </div>
       </div>
-    </>
+   
+    </div>
   );
 };
 
