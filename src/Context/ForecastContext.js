@@ -71,6 +71,53 @@ export function AuthProvider({ children }) {
       dusk[0] > sunset[0] || (dusk[0] === sunset[0] && dusk[1] > sunset[1])
     );
   }, []);
+  const duskCalc2 = useCallback((timing, locale) => {
+    let dusk = [];
+    let sunset = [];
+    const dusktime = new Date();
+    const duskforeign = dusktime.toLocaleString("en-US", { timeZone: locale });
+    const duskarray = duskforeign.split(",");
+    const newtime = duskarray[1];
+    const timess = newtime.toString();
+    const last = timess.split(":");
+    const arr = [last[2]];
+    const arr1 = arr[0].split("");
+    const arr2 = arr1.slice(2);
+    const arr3 = arr2.join("").toString().trim();
+    console.log([dusktime, duskforeign]);
+    if (arr3 === "PM") {
+      console.log(true)
+      let num = parseInt(last[0])+12;
+      dusk.push(num)
+    } else {
+      console.log(false)
+      dusk.push(parseInt(last[0]));
+    } dusk.push(parseInt(last[1]));
+
+    const sunsettime = new Date(timing * 1000);
+    const sunsetforeign = sunsettime.toLocaleString('en-US', { timeZone: locale });
+    const sunsetarray = sunsetforeign.split(",");
+    const snewtime = sunsetarray[1];
+    const stimess = snewtime.toString();
+    const slast = stimess.split(":");
+    const sarr = [slast[2]];
+    const sarr1 = sarr[0].split("");
+    const sarr2 = sarr1.slice(2);
+    const sarr3 = sarr2.join("").toString().trim();
+    console.log([sunsettime, sunsetforeign]);
+    if (arr3 === "PM") {
+      console.log(true)
+      let num = parseInt(slast[0])+12;
+      sunset.push(num)
+    } else {
+      console.log(false)
+      sunset.push(parseInt(slast[0]));
+    } sunset.push(parseInt(slast[1]));
+    console.log([dusk, sunset, sarr3]);
+    return (
+      dusk[0] > sunset[0] || (dusk[0] === sunset[0] && dusk[1] > sunset[1])
+    );
+  }, []);
   const DateCalc = useCallback(
     (timing) => {
       let time = "";
@@ -94,10 +141,14 @@ export function AuthProvider({ children }) {
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
       );
       const res = await response.json();
-
+      const georesponse = await fetch(
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${res.coord.lat}&lon=${res.coord.lon}&units=metric&appid=${API_KEY}`
+      );
+      const res1 = await georesponse.json()
+      console.log(res1)
       const resData = [
         {
-          dusk: duskCalc(res.sys.sunset),
+          dusk: duskCalc2(res.sys.sunset, res1.timezone),
           name: res.name,
           temp: Math.round(res.main.temp),
           min_temp: Math.round(res.main.temp_min),
