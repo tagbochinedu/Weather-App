@@ -73,6 +73,7 @@ export function AuthProvider({ children }) {
   }, []);
   const duskCalc2 = useCallback((timing, locale) => {
     let dusk = [];
+    let sunrise = []
     let sunset = [];
     const dusktime = new Date();
     const duskforeign = dusktime.toLocaleString("en-US", { timeZone: locale });
@@ -94,6 +95,20 @@ export function AuthProvider({ children }) {
       dusk.push(parseInt(last[0]));
     } dusk.push(parseInt(last[1]));
 
+    const sunrisetime = new Date(timing * 1000);
+    const sunriseforeign = sunrisetime.toLocaleString('en-US', { timeZone: locale });
+    const sunrisearray = sunriseforeign.split(",");
+    const sunnewtime = sunrisearray[1];
+    const suntimess = sunnewtime.toString();
+    const sunlast = suntimess.split(":");
+    const sunarr = [sunlast[2]];
+    const sunarr1 = sunarr[0].split("");
+    const sunarr2 = sunarr1.slice(2);
+    const sunarr3 = sunarr2.join("").toString().trim();
+    console.log([sunrisetime, sunriseforeign]);
+    sunrise.push(parseInt(sunlast[0]));
+    sunrise.push(parseInt(sunlast[1]))
+    
     const sunsettime = new Date(timing * 1000);
     const sunsetforeign = sunsettime.toLocaleString('en-US', { timeZone: locale });
     const sunsetarray = sunsetforeign.split(",");
@@ -115,7 +130,7 @@ export function AuthProvider({ children }) {
     } sunset.push(parseInt(slast[1]));
     console.log([dusk, sunset, sarr3]);
     return (
-      dusk[0] > sunset[0] || (dusk[0] === sunset[0] && dusk[1] > sunset[1])
+      dusk[0] > sunset[0] || (dusk[0] === sunset[0] && dusk[1] > sunset[1] || dusk[0]>sunrise[0]
     );
   }, []);
   const DateCalc = useCallback(
