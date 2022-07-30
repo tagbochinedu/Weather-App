@@ -21,8 +21,10 @@ export function AuthProvider1({ children }) {
       return `${hours}:${minutes}am`;
     }
   }, []);
+  
   const duskCalc = useCallback((timing, locale) => {
     let dusk = [];
+    let sunrise = []
     let sunset = [];
     const dusktime = new Date();
     const duskforeign = dusktime.toLocaleString("en-US", { timeZone: locale });
@@ -36,19 +38,30 @@ export function AuthProvider1({ children }) {
     const arr3 = arr2.join("").toString().trim();
     console.log([dusktime, duskforeign]);
     if (arr3 === "PM") {
-      console.log(true);
-      let num = parseInt(last[0]) + 12;
-      dusk.push(num);
+      console.log(true)
+      let num = parseInt(last[0])+12;
+      dusk.push(num)
     } else {
-      console.log(false);
+      console.log(false)
       dusk.push(parseInt(last[0]));
-    }
-    dusk.push(parseInt(last[1]));
+    } dusk.push(parseInt(last[1]));
 
+    const sunrisetime = new Date(timing * 1000);
+    const sunriseforeign = sunrisetime.toLocaleString('en-US', { timeZone: locale });
+    const sunrisearray = sunriseforeign.split(",");
+    const sunnewtime = sunrisearray[1];
+    const suntimess = sunnewtime.toString();
+    const sunlast = suntimess.split(":");
+    const sunarr = [sunlast[2]];
+    const sunarr1 = sunarr[0].split("");
+    const sunarr2 = sunarr1.slice(2);
+    const sunarr3 = sunarr2.join("").toString().trim();
+    console.log(sunarr3)
+    sunrise.push(parseInt(sunlast[0]));
+    sunrise.push(parseInt(sunlast[1]))
+    
     const sunsettime = new Date(timing * 1000);
-    const sunsetforeign = sunsettime.toLocaleString("en-US", {
-      timeZone: locale,
-    });
+    const sunsetforeign = sunsettime.toLocaleString('en-US', { timeZone: locale });
     const sunsetarray = sunsetforeign.split(",");
     const snewtime = sunsetarray[1];
     const stimess = snewtime.toString();
@@ -58,18 +71,17 @@ export function AuthProvider1({ children }) {
     const sarr2 = sarr1.slice(2);
     const sarr3 = sarr2.join("").toString().trim();
     console.log([sunsettime, sunsetforeign]);
-    if (arr3 === "PM") {
-      console.log(true);
-      let num = parseInt(slast[0]) + 12;
-      sunset.push(num);
+    if (sarr3 === "PM") {
+      console.log(true)
+      let num = parseInt(slast[0])+12;
+      sunset.push(num)
     } else {
-      console.log(false);
+      console.log(false)
       sunset.push(parseInt(slast[0]));
-    }
-    sunset.push(parseInt(slast[1]));
+    } sunset.push(parseInt(slast[1]));
     console.log([dusk, sunset, sarr3]);
     return (
-      dusk[0] > sunset[0] || (dusk[0] === sunset[0] && dusk[1] > sunset[1])
+      dusk[0] > sunset[0] || (dusk[0] === sunset[0] && dusk[1] > sunset[1]) || dusk[0] < sunrise[0]
     );
   }, []);
 
