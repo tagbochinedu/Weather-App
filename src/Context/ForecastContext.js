@@ -105,7 +105,7 @@ export function AuthProvider({ children }) {
     const sunarr1 = sunarr[0].split("");
     const sunarr2 = sunarr1.slice(2);
     const sunarr3 = sunarr2.join("").toString().trim();
-    console.log([sunrisetime, sunriseforeign]);
+    (console.log(sunarr3)
     sunrise.push(parseInt(sunlast[0]));
     sunrise.push(parseInt(sunlast[1]))
     
