@@ -105,7 +105,7 @@ export function AuthProvider({ children }) {
     const sarr2 = sarr1.slice(2);
     const sarr3 = sarr2.join("").toString().trim();
     console.log([sunsettime, sunsetforeign]);
-    if (arr3 === "PM") {
+    if (sarr3 === "PM") {
       console.log(true)
       let num = parseInt(slast[0])+12;
       sunset.push(num)
