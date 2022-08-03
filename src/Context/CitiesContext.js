@@ -81,7 +81,7 @@ export function AuthProvider1({ children }) {
     } sunset.push(parseInt(slast[1]));
     console.log([dusk, sunset, sarr3]);
     return (
-      dusk[0] > sunset[0] || (dusk[0] === sunset[0] && dusk[1] > sunset[1]) || dusk[0] < sunrise[0]
+      dusk[0] > sunset[0] || (dusk[0] === sunset[0] && dusk[1] > sunset[1]) || (dusk[0] < sunrise[0] && dusk[0] < sunset[0]) 
     );
   }, []);
 
