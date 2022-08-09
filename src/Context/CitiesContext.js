@@ -37,7 +37,7 @@ export function AuthProvider1({ children }) {
     const arr2 = arr1.slice(2);
     const arr3 = arr2.join("").toString().trim();
     console.log([dusktime, duskforeign]);
-    if (arr3 === "PM") {
+     if (arr3 === "PM" || (arr3 === "AM" && parseInt(last[0]) === 12)) {
       console.log(true)
       let num = parseInt(last[0])+12;
       dusk.push(num)
@@ -81,7 +81,7 @@ export function AuthProvider1({ children }) {
     } sunset.push(parseInt(slast[1]));
     console.log([dusk, sunset, sarr3]);
     return (
-      (dusk[0] > sunset[0] && dusk[0] <= 24 && dusk[1] <= 59) || (dusk[0] === sunset[0] && dusk[1] > sunset[1]) || dusk[0] < sunrise[0] || dusk[0] === 0
+     (dusk[0] > sunset[0]) || (dusk[0] === sunset[0] && dusk[1] > sunset[1]) || dusk[0] < sunrise[0]
     );
   }, []);
 
