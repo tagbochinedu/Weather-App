@@ -192,8 +192,8 @@ export function AuthProvider({ children }) {
     navigator.geolocation.getCurrentPosition((position) => {
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
-      setLoading(false);
     });
+    setLoading(false);
     const fetchWeather = async () => {
       try {
         const response = await fetch(
