@@ -192,7 +192,7 @@ export function AuthProvider({ children }) {
     navigator.geolocation.getCurrentPosition((position) => {
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
-      console.log(longitude, latitude);
+      setLoading(false);
     });
     const fetchWeather = async () => {
       try {
@@ -267,7 +267,7 @@ export function AuthProvider({ children }) {
         setWeeklyWeather(weeklyData);
         setDusk(duskCalc(res.sys.sunset));
         setLocationWeather(data);
-        setLoading(false);
+        
       } catch (error) {
         console.log(error);
       }
