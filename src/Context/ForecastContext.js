@@ -86,7 +86,7 @@ export function AuthProvider({ children }) {
     const arr2 = arr1.slice(2);
     const arr3 = arr2.join("").toString().trim();
     console.log([dusktime, duskforeign]);
-    if (arr3 === "PM") {
+    if (arr3 === "PM" || (arr3 === "AM" && parseInt(last[0]) === 12)) {
       console.log(true)
       let num = parseInt(last[0])+12;
       dusk.push(num)
