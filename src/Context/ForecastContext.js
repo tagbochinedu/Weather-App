@@ -12,12 +12,11 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [latitude, setLatitude] = useState("");
+  const [latitude, setLatitude] = useState();
   const [longitude, setLongitude] = useState("");
   const [locationWeather, setLocationWeather] = useState([]);
   const [weeklyWeather, setWeeklyWeather] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [display, setDisplay] = useState(false)
+  const [display, setDisplay] = useState(false);
   const [city, setCity] = useState("");
   const [data, setData] = useState([]);
   const [errorText, setErrorText] = useState("");
@@ -74,7 +73,7 @@ export function AuthProvider({ children }) {
   }, []);
   const duskCalc2 = useCallback((timing, locale) => {
     let dusk = [];
-    let sunrise = []
+    let sunrise = [];
     let sunset = [];
     const dusktime = new Date();
     const duskforeign = dusktime.toLocaleString("en-US", { timeZone: locale });
@@ -86,25 +85,33 @@ export function AuthProvider({ children }) {
     const arr1 = arr[0].split("");
     const arr2 = arr1.slice(2);
     const arr3 = arr2.join("").toString().trim();
-    if ((arr3 === "PM" && parseInt(last[0]) !== 12) || (arr3 === "AM" && parseInt(last[0]) === 12)) {
-      let num = parseInt(last[0])+12;
-      dusk.push(num)
+    if (
+      (arr3 === "PM" && parseInt(last[0]) !== 12) ||
+      (arr3 === "AM" && parseInt(last[0]) === 12)
+    ) {
+      let num = parseInt(last[0]) + 12;
+      dusk.push(num);
     } else {
       dusk.push(parseInt(last[0]));
-    } dusk.push(parseInt(last[1]));
+    }
+    dusk.push(parseInt(last[1]));
 
     const sunrisetime = new Date(timing * 1000);
-    const sunriseforeign = sunrisetime.toLocaleString('en-US', { timeZone: locale });
+    const sunriseforeign = sunrisetime.toLocaleString("en-US", {
+      timeZone: locale,
+    });
     const sunrisearray = sunriseforeign.split(",");
     const sunnewtime = sunrisearray[1];
     const suntimess = sunnewtime.toString();
     const sunlast = suntimess.split(":");
-    
+
     sunrise.push(parseInt(sunlast[0]));
-    sunrise.push(parseInt(sunlast[1]))
-    
+    sunrise.push(parseInt(sunlast[1]));
+
     const sunsettime = new Date(timing * 1000);
-    const sunsetforeign = sunsettime.toLocaleString('en-US', { timeZone: locale });
+    const sunsetforeign = sunsettime.toLocaleString("en-US", {
+      timeZone: locale,
+    });
     const sunsetarray = sunsetforeign.split(",");
     const snewtime = sunsetarray[1];
     const stimess = snewtime.toString();
@@ -113,16 +120,19 @@ export function AuthProvider({ children }) {
     const sarr1 = sarr[0].split("");
     const sarr2 = sarr1.slice(2);
     const sarr3 = sarr2.join("").toString().trim();
-    
+
     if (sarr3 === "PM") {
-      let num = parseInt(slast[0])+12;
-      sunset.push(num)
+      let num = parseInt(slast[0]) + 12;
+      sunset.push(num);
     } else {
       sunset.push(parseInt(slast[0]));
-    } sunset.push(parseInt(slast[1]));
-    
+    }
+    sunset.push(parseInt(slast[1]));
+
     return (
-     (dusk[0] > sunset[0]) || (dusk[0] === sunset[0] && dusk[1] > sunset[1]) || dusk[0] < sunrise[0]
+      dusk[0] > sunset[0] ||
+      (dusk[0] === sunset[0] && dusk[1] > sunset[1]) ||
+      dusk[0] < sunrise[0]
     );
   }, []);
   const DateCalc = useCallback(
@@ -151,7 +161,7 @@ export function AuthProvider({ children }) {
       const georesponse = await fetch(
         `https://api.openweathermap.org/data/2.5/onecall?lat=${res.coord.lat}&lon=${res.coord.lon}&units=metric&appid=${API_KEY}`
       );
-      const res1 = await georesponse.json()
+      const res1 = await georesponse.json();
       const resData = [
         {
           dusk: duskCalc2(res.sys.sunset, res1.timezone),
@@ -182,11 +192,9 @@ export function AuthProvider({ children }) {
     navigator.geolocation.getCurrentPosition((position) => {
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
-      setDisplay(true)
+      setDisplay(true);
     });
-    if(latitude === '' && longitude === '') {
-      setLoading(false);
-    }
+
     const fetchWeather = async () => {
       try {
         const response = await fetch(
@@ -260,7 +268,6 @@ export function AuthProvider({ children }) {
         setWeeklyWeather(weeklyData);
         setDusk(duskCalc(res.sys.sunset));
         setLocationWeather(data);
-        
       } catch (error) {
         console.log(error);
       }
@@ -271,7 +278,6 @@ export function AuthProvider({ children }) {
   const value = {
     locationWeather,
     weeklyWeather,
-    loading,
     submitHandler,
     setCity,
     setData,
@@ -282,7 +288,7 @@ export function AuthProvider({ children }) {
     errorText,
     error,
     dusk,
-    display
+    display,
   };
   return (
     <ForecastContext.Provider value={value}>

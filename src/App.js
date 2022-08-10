@@ -8,19 +8,19 @@ import { useAuth } from "./Context/ForecastContext";
 import { useAuth1 } from "./Context/CitiesContext";
 
 export default function App() {
-  const { loading, dusk } = useAuth();
+  const { dusk } = useAuth();
   const { loading1 } = useAuth1();
   return (
     <div
       className={`${"pt-6 min-h-screen"} ${
-        loading ? "flex justify-center items-center" : ""
+        loading1 ? "flex justify-center items-center" : ""
       } ${
         dusk
           ? "bg-gradient-to-bl from-midnight to-dawn"
           : "bg-gradient-to-bl from-sunrise to-sunset"
       }`}
     >
-      {(loading && loading1) ? (
+      {(loading1) ? (
         <SunIcon className="animate-spin text-white w-16 h-16" />
       ) : (
         <>
