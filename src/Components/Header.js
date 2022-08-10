@@ -4,7 +4,7 @@ import { MenuIcon } from "@heroicons/react/solid";
 import { XIcon } from "@heroicons/react/solid";
 import { useAuth } from "../Context/ForecastContext";
 
-const SideNav = () => {
+const Header = () => {
   const [width, setWidth] = useState(window.innerWidth);
   const [menu, setMenu] = useState(false);
   const { locationWeather } = useAuth();
@@ -89,4 +89,4 @@ const SideNav = () => {
   );
 };
 
-export default SideNav;
+export default Header;

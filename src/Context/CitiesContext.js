@@ -36,13 +36,10 @@ export function AuthProvider1({ children }) {
     const arr1 = arr[0].split("");
     const arr2 = arr1.slice(2);
     const arr3 = arr2.join("").toString().trim();
-    console.log([dusktime, duskforeign]);
-     if (arr3 === "PM" || (arr3 === "AM" && parseInt(last[0]) === 12)) {
-      console.log(true)
+    if ((arr3 === "PM" && parseInt(last[0]) !== 12) || (arr3 === "AM" && parseInt(last[0]) === 12)) {
       let num = parseInt(last[0])+12;
       dusk.push(num)
     } else {
-      console.log(false)
       dusk.push(parseInt(last[0]));
     } dusk.push(parseInt(last[1]));
 
@@ -52,11 +49,8 @@ export function AuthProvider1({ children }) {
     const sunnewtime = sunrisearray[1];
     const suntimess = sunnewtime.toString();
     const sunlast = suntimess.split(":");
-    const sunarr = [sunlast[2]];
-    const sunarr1 = sunarr[0].split("");
-    const sunarr2 = sunarr1.slice(2);
-    const sunarr3 = sunarr2.join("").toString().trim();
-    console.log(sunarr3)
+    
+  
     sunrise.push(parseInt(sunlast[0]));
     sunrise.push(parseInt(sunlast[1]))
     
@@ -70,18 +64,18 @@ export function AuthProvider1({ children }) {
     const sarr1 = sarr[0].split("");
     const sarr2 = sarr1.slice(2);
     const sarr3 = sarr2.join("").toString().trim();
-    console.log([sunsettime, sunsetforeign]);
+  
     if (sarr3 === "PM") {
-      console.log(true)
+      
       let num = parseInt(slast[0])+12;
       sunset.push(num)
     } else {
-      console.log(false)
+     
       sunset.push(parseInt(slast[0]));
     } sunset.push(parseInt(slast[1]));
-    console.log([dusk, sunset, sarr3]);
+   
     return (
-     (dusk[0] > sunset[0]) || (dusk[0] === sunset[0] && dusk[1] > sunset[1]) || dusk[0] < sunrise[0]
+      (dusk[0] > sunset[0]) || (dusk[0] === sunset[0] && dusk[1] > sunset[1]) || dusk[0] < sunrise[0]
     );
   }, []);
 

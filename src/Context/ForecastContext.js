@@ -17,6 +17,7 @@ export function AuthProvider({ children }) {
   const [locationWeather, setLocationWeather] = useState([]);
   const [weeklyWeather, setWeeklyWeather] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [display, setDisplay] = useState(false)
   const [city, setCity] = useState("");
   const [data, setData] = useState([]);
   const [errorText, setErrorText] = useState("");
@@ -85,13 +86,10 @@ export function AuthProvider({ children }) {
     const arr1 = arr[0].split("");
     const arr2 = arr1.slice(2);
     const arr3 = arr2.join("").toString().trim();
-    console.log([dusktime, duskforeign]);
-    if (arr3 === "PM" || (arr3 === "AM" && parseInt(last[0]) === 12)) {
-      console.log(true)
+    if ((arr3 === "PM" && parseInt(last[0]) !== 12) || (arr3 === "AM" && parseInt(last[0]) === 12)) {
       let num = parseInt(last[0])+12;
       dusk.push(num)
     } else {
-      console.log(false)
       dusk.push(parseInt(last[0]));
     } dusk.push(parseInt(last[1]));
 
@@ -101,11 +99,7 @@ export function AuthProvider({ children }) {
     const sunnewtime = sunrisearray[1];
     const suntimess = sunnewtime.toString();
     const sunlast = suntimess.split(":");
-    const sunarr = [sunlast[2]];
-    const sunarr1 = sunarr[0].split("");
-    const sunarr2 = sunarr1.slice(2);
-    const sunarr3 = sunarr2.join("").toString().trim();
-    console.log(sunarr3)
+    
     sunrise.push(parseInt(sunlast[0]));
     sunrise.push(parseInt(sunlast[1]))
     
@@ -119,16 +113,14 @@ export function AuthProvider({ children }) {
     const sarr1 = sarr[0].split("");
     const sarr2 = sarr1.slice(2);
     const sarr3 = sarr2.join("").toString().trim();
-    console.log([sunsettime, sunsetforeign]);
+    
     if (sarr3 === "PM") {
-      console.log(true)
       let num = parseInt(slast[0])+12;
       sunset.push(num)
     } else {
-      console.log(false)
       sunset.push(parseInt(slast[0]));
     } sunset.push(parseInt(slast[1]));
-    console.log([dusk, sunset, sarr3]);
+    
     return (
      (dusk[0] > sunset[0]) || (dusk[0] === sunset[0] && dusk[1] > sunset[1]) || dusk[0] < sunrise[0]
     );
@@ -160,7 +152,6 @@ export function AuthProvider({ children }) {
         `https://api.openweathermap.org/data/2.5/onecall?lat=${res.coord.lat}&lon=${res.coord.lon}&units=metric&appid=${API_KEY}`
       );
       const res1 = await georesponse.json()
-      console.log(res1)
       const resData = [
         {
           dusk: duskCalc2(res.sys.sunset, res1.timezone),
@@ -177,7 +168,6 @@ export function AuthProvider({ children }) {
       ];
       setData(resData);
       setSearchLoader(false);
-      console.log(res);
       setError(false);
     } catch (error) {
       console.log(error.message);
@@ -192,8 +182,11 @@ export function AuthProvider({ children }) {
     navigator.geolocation.getCurrentPosition((position) => {
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
+      setDisplay(true)
     });
-    setLoading(false);
+    if(latitude === '' && longitude === '') {
+      setLoading(false);
+    }
     const fetchWeather = async () => {
       try {
         const response = await fetch(
@@ -289,6 +282,7 @@ export function AuthProvider({ children }) {
     errorText,
     error,
     dusk,
+    display
   };
   return (
     <ForecastContext.Provider value={value}>

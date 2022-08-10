@@ -20,7 +20,7 @@ export default function App() {
           : "bg-gradient-to-bl from-sunrise to-sunset"
       }`}
     >
-      {(loading & loading1) ? (
+      {(loading && loading1) ? (
         <SunIcon className="animate-spin text-white w-16 h-16" />
       ) : (
         <>
